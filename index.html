@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<link rel="stylesheet" href="index.css">
+</head>
+<body>
+<main>
+    <h1>Weather Forecast</h1>
+    <p>Please enter the city name and know weather of this city </p>
+</main>
+<div class="center">
+    <input type="text" id="myinput" class="input" placeholder="Enter The City Name">
+    <button id="mybtn" class="button">Submit</button> 
+</div>
+
+<div class="information">
+
+    <div id="info">
+        <div id="ab"></div>
+    </div>
+</div>
+
+<script>
+document.getElementById("mybtn").onclick = () =>{
+const cityName = document.getElementById("myinput").value;
+
+fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityName},&units=metric&APPID=e941854a35094448128192e5f47cb9f3`)
+.then((data)=>{
+    return data.json()
+})
+.then((actualData)=>{
+
+    console.log(actualData);
+    // console.log(actualData.name);
+    // console.log(actualData.main.temp);
+    // console.log(actualData.weather[0].description);
+    document.getElementById("info").innerHTML=`
+    <ul>
+    <li>City : ${actualData.name}</li>
+    <li>Country Code : ${actualData.sys.country} </>
+    <li>Temperature : ${actualData.main.temp} C.</li>
+    <li>Weather : ${actualData.weather[0].description}</li>
+   <li>Wind Speed : Speed- ${actualData.wind.speed}, Degree-${actualData.wind.deg}</li>
+   
+    </ul>
+    `;
+})
+
+
+}
+
+
+
+
+
+
+</script>
+</body>
+</html>
